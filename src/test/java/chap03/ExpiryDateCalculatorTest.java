@@ -21,6 +21,25 @@ public class ExpiryDateCalculatorTest {
         );
     }
 
+    @Test
+    void 납부일과_한달_뒤_일자가_같지_않음() {
+        assertExpiryDate(
+                LocalDate.of(2024, 1, 31),
+                10_000,
+                LocalDate.of(2024, 2, 29)
+        );
+        assertExpiryDate(
+                LocalDate.of(2024, 5, 31),
+                10_000,
+                LocalDate.of(2024, 6, 30)
+        );
+        assertExpiryDate(
+                LocalDate.of(2023, 1, 31),
+                10_000,
+                LocalDate.of(2023, 2, 28)
+        );
+    }
+
     private void assertExpiryDate(LocalDate billingDate, int payAmount, LocalDate expectedExpiryDate) {
         ExpiryDateCalculator cal = new ExpiryDateCalculator();
         LocalDate realExpiryDate = cal.calculateExpiryDate(billingDate, payAmount);
